@@ -1148,19 +1148,19 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
             })
         }
         
-        let alert = UIAlertController(title: "Permission for \(permission.prettyDescription) was denied.".localized,
-            message: "Please enable access to \(permission.prettyDescription) in the Settings app".localized,
+        let alert = UIAlertController(title: "Permissions for \(permission.prettyDescription) is currently disabled.",
+            message: "Please enable access to \(permission.prettyDescription) in the app Settings.",
             preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK".localized,
-            style: .cancel,
-            handler: nil))
-        alert.addAction(UIAlertAction(title: "Show me".localized,
-            style: .default,
-            handler: { action in
-                NotificationCenter.default.addObserver(self, selector: #selector(self.appForegroundedAfterSettings), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-                
-                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.shared.openURL(settingsUrl!)
+        alert.addAction(UIAlertAction(title: "Close",
+                                      style: .default,
+                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings",
+                                      style: .default,
+                                      handler: { action in
+                                        NotificationCenter.default.addObserver(self, selector: #selector(self.appForegroundedAfterSettings), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+                                        
+                                        let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                                        UIApplication.shared.openURL(settingsUrl!)
         }))
         
         DispatchQueue.main.async {
@@ -1182,19 +1182,19 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
             })
         }
         
-        let alert = UIAlertController(title: "\(permission.prettyDescription) is currently disabled.".localized,
-            message: "Please enable access to \(permission.prettyDescription) in Settings".localized,
+        let alert = UIAlertController(title: "Permissions for \(permission.prettyDescription) is currently disabled.",
+            message: "Please enable access to \(permission.prettyDescription) in the app Settings.",
             preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK".localized,
-            style: .cancel,
-            handler: nil))
-        alert.addAction(UIAlertAction(title: "Show me".localized,
-            style: .default,
-            handler: { action in
-                NotificationCenter.default.addObserver(self, selector: #selector(self.appForegroundedAfterSettings), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-                
-                let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
-                UIApplication.shared.openURL(settingsUrl!)
+        alert.addAction(UIAlertAction(title: "Close",
+                                      style: .default,
+                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "Settings",
+                                      style: .default,
+                                      handler: { action in
+                                        NotificationCenter.default.addObserver(self, selector: #selector(self.appForegroundedAfterSettings), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+                                        
+                                        let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
+                                        UIApplication.shared.openURL(settingsUrl!)
         }))
         
         DispatchQueue.main.async {
