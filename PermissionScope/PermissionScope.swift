@@ -424,12 +424,12 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
 
     /**
     Requests access to LocationAlways, if necessary.
-    */
-    public func requestLocationAlways() {
-    	let hasAlwaysKey:Bool = !Bundle.main
-    		.object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationAlways).isNil
-    	assert(hasAlwaysKey, Constants.InfoPlistKeys.locationAlways + " not found in Info.plist.")
-    	
+     */
+    public func requestLocationAlways(showAlert: Bool) {
+        let hasAlwaysKey:Bool = !Bundle.main
+            .object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationAlways).isNil
+        assert(hasAlwaysKey, Constants.InfoPlistKeys.locationAlways + " not found in Info.plist.")
+        
         let status = statusLocationAlways()
         switch status {
         case .unknown:
@@ -437,11 +437,29 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
                 defaults.set(true, forKey: Constants.NSUserDefaultsKeys.requestedInUseToAlwaysUpgrade)
                 defaults.synchronize()
             }
+            
             locationManager.requestAlwaysAuthorization()
+            
+            break
+            
         case .unauthorized:
+            guard showAlert else {
+                return
+            }
+            
             self.showDeniedAlert(.locationAlways)
+            
+            break
+            
         case .disabled:
+            guard showAlert else {
+                return
+            }
+            
             self.showDisabledAlert(.locationInUse)
+            
+            break
+            
         default:
             break
         }
@@ -470,20 +488,37 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
 
     /**
     Requests access to LocationWhileInUse, if necessary.
-    */
-    public func requestLocationInUse() {
-    	let hasWhenInUseKey :Bool = !Bundle.main
-    		.object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationWhenInUse).isNil
-    	assert(hasWhenInUseKey, Constants.InfoPlistKeys.locationWhenInUse + " not found in Info.plist.")
-    	
+     */
+    public func requestLocationInUse(showAlert: Bool) {
+        let hasWhenInUseKey :Bool = !Bundle.main
+            .object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationWhenInUse).isNil
+        assert(hasWhenInUseKey, Constants.InfoPlistKeys.locationWhenInUse + " not found in Info.plist.")
+        
         let status = statusLocationInUse()
         switch status {
         case .unknown:
             locationManager.requestWhenInUseAuthorization()
+            
+            break
+            
         case .unauthorized:
+            guard showAlert else {
+                return
+            }
+            
             self.showDeniedAlert(.locationInUse)
+            
+            break
+            
         case .disabled:
+            guard showAlert else {
+                return
+            }
+            
             self.showDisabledAlert(.locationInUse)
+            
+            break
+            
         default:
             break
         }
