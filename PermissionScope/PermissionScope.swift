@@ -554,14 +554,11 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     */
     public func statusNotifications() -> PermissionStatus {
         let settings = UIApplication.shared.currentUserNotificationSettings
-        if let settingTypes = settings?.types , settingTypes != UIUserNotificationType() {
+        if let settingTypes = settings?.types , settingTypes != UIUserNotificationType()
+            || UIApplication.shared.isRegisteredForRemoteNotifications {
             return .authorized
         } else {
-            if defaults.bool(forKey: Constants.NSUserDefaultsKeys.requestedNotifications) {
-                return .unauthorized
-            } else {
-                return .unknown
-            }
+            return .unauthorized
         }
     }
     
